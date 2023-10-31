@@ -7,7 +7,8 @@ clear
 clc
 
 %% Filename
-inputname = 'testtracks.avi';
+addpath(genpath('../src/'))
+inputname = 'data/testtracks.avi';
 
 %% Test image
 vid = VideoReader(inputname);

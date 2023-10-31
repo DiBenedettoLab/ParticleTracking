@@ -1,4 +1,4 @@
-function [vtracks,ntracks,meanlength,rmslength,found] = PredictiveTracker_MHD_2022(inputnames,threshold,max_disp,bground_name,minarea,invert,noisy,framerange,gifname,found,correct,yesvels)
+function [vtracks,ntracks,meanlength,rmslength,found,tracks] = PredictiveTracker_MHD_2022(inputnames,threshold,max_disp,bground_name,minarea,invert,noisy,framerange,gifname,found,correct,yesvels)
 % Usage: [vtracks,ntracks,meanlength,rmslength] = PredictiveTracker(inputnames,threshold,max_disp,[bground_name],[minarea],[invert],[noisy])
 % Given a movie of particle motions, PredictiveTracker produces Lagrangian
 % particle tracks using a predictive three-frame best-estimate algorithm.
@@ -57,17 +57,17 @@ function [vtracks,ntracks,meanlength,rmslength,found] = PredictiveTracker_MHD_20
 
 % -=- Set defaults -=-----------------------------------------------------
 bground_name_default = 'background.tif';
-noisy_default=0; % don't plot unless requested
-minarea_default=1; % by default seek small particles quickly
-invert_default=-1; % by default, use absolute contrast
-pausetime=1/33; % seconds to pause between frames when plotting
-savedirname='tracksmovie';
-figsize=[1024 512]; % figure width and height, in pixelsr
-framerange_default=[1 inf]; % Could allow framerange as an input... 
-filterwidth = 1; 
-fitwidth = 3; % parameters for the differentiation kernel
-index_default=[];
-found_default=[];
+noisy_default       =   0; % don't plot unless requested
+minarea_default     =   1; % by default seek small particles quickly
+invert_default      =   -1; % by default, use absolute contrast
+pausetime           =   1/33; % seconds to pause between frames when plotting
+savedirname         =   'tracksmovie';
+figsize             =   [1024 512]; % figure width and height, in pixelsr
+framerange_default  =   [1 inf]; % Could allow framerange as an input... 
+filterwidth         =   1; 
+fitwidth            =   3; % parameters for the differentiation kernel
+index_default       =   [];
+found_default       =   [];
 
 % -=- Parse inputs -=-----------------------------------------------------
 if nargin<1
