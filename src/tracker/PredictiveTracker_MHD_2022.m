@@ -1,4 +1,4 @@
-function [vtracks,ntracks,meanlength,rmslength,found,tracks] = PredictiveTracker_MHD_2022(inputnames,threshold,max_disp,bground_name,minarea,invert,noisy,framerange,gifname,found,correct,yesvels)
+function [vtracks,ntracks,meanlength,rmslength,found] = PredictiveTracker_MHD_2022(inputnames,threshold,max_disp,bground_name,minarea,invert,noisy,framerange,gifname,found,correct,yesvels)
 % Usage: [vtracks,ntracks,meanlength,rmslength] = PredictiveTracker(inputnames,threshold,max_disp,[bground_name],[minarea],[invert],[noisy])
 % Given a movie of particle motions, PredictiveTracker produces Lagrangian
 % particle tracks using a predictive three-frame best-estimate algorithm.

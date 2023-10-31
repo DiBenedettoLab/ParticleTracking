@@ -1,4 +1,4 @@
-function [vtracks,tracks] = Predictive_Tracker(centroids,max_disp)
+function [vtracks,ntracks,meanlength,rmslength] = Predictive_Tracker(centroids,max_disp)
 %% things to work on
 % separating tracking and finding and debugging a little better
 % more analysis code
