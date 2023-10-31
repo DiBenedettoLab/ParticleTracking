@@ -64,7 +64,6 @@ if length(centroid_fields_all) > 3
     for i=1:length(centroid_fields_all)
 
         field_i = centroid_fields_all{i};
-        % Check if it's a column and the same length? [TODO]
 
         if ~sum(strcmp(field_i,{'x','y','t'}))
             field_data = getfield(centroids,field_i);
@@ -91,7 +90,7 @@ N_extra = length(centroid_fields_extra);
 
 
 % Make sure everything is sorted in increasing time
-if ~issorted(t);
+if ~issorted(t)
     [t,ind] = sort(t);
     x = x(ind);
     y = y(ind);
@@ -101,7 +100,7 @@ if ~issorted(t);
         field_data = field_data(ind,:);
         centroids = setfield(centroids,field_f, field_data);
     end
-
+end
 
     %% Sort out which particles were found in which frames
 
