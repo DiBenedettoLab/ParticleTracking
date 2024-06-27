@@ -9,3 +9,7 @@ Next use `Particle_Tracker.m` to link identified particles into individual traje
 
 ## Example
 See `example_new.m` for updated example use case.
+
+## Future things to add:
+- More analysis, cleaning, and plotting codes
+- Particle tracking in image pair data
