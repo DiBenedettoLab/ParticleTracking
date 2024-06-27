@@ -1,12 +1,18 @@
-function [vtracks,ntracks,meanlength,rmslength] = Predictive_Tracker(centroids,max_disp)
+function [vtracks,ntracks,meanlength,rmslength] = Predictive_Tracker(centroids,varargin)
 %% things to work on
 % separating tracking and finding and debugging a little better
 % more analysis code
 % more flexible inputs, could even include json inputs
 % more options for using e.g., centroid, weighted centroid, PIV, frame
-% straddling
+% frame straddling
 
 %% info
+
+% either input name-value pairs or
+% Predictive_Tracker(centroids,'max_disp',10,'fitwidth',3) 
+% Predictive_Tracker(centroids,max_disp)
+% Predictive_Tracker(centroids)
+
 % Predictive tracker in 2D given identified particle locations
 
 % Inputs:
@@ -22,11 +28,47 @@ function [vtracks,ntracks,meanlength,rmslength] = Predictive_Tracker(centroids,m
 % everything should be column vectors/matrices with the same column length.
 % the extra fields can have different row lengths
 
-%% other inputs to parse
+yesvels = 1; %need to make this an option (to only get tracks no velocities)
 
-fitwidth = 3; % 3 nick default
-filterwidth = 1;
-yesvels = 1;
+%% Parse options (can add more as needed)
+
+% Default Values
+defaultFitwidth = 3;
+defaultFilterwidth = 1; % what is the difference between this and the other parameter?
+defaultMax_disp = inf;
+
+if size(varargin) == 1
+    
+    max_disp = varargin{1};
+
+    fitwidth = defaultFitwidth; % 3 nick default
+    filterwidth = defaultFilterwidth;
+
+elseif size(varargin) ==0
+
+    max_disp = defaultMax_disp;
+    fitwidth = defaultFitwidth; % 3 nick default
+    filterwidth = defaultFilterwidth;
+
+else
+    % Parse
+    p = inputParser;
+    validScalarPosNum = @(x) isnumeric(x) && isscalar(x) && (x > 0);
+
+    addParameter(p,'fitwidth',defaultFitwidth,validScalarPosNum);
+    addParameter(p,'filterwidth',defaultFilterwidth,validScalarPosNum);
+    addParameter(p,'max_disp',defaultMax_disp,validScalarPosNum);
+
+    parse(p,varargin{:});
+    % Convert structure to variables
+    fn = fieldnames(p.Results);
+    for i=1:length(fn)
+        varname=fn{i};
+        eval([varname '=p.Results.' varname ';'])
+    end
+end
+
+
 
 %% Parse input particle info
 try
@@ -343,6 +385,9 @@ end
             v = -conv(tracks(ii).Y,vkernel,'valid');
 
 
+            % MHD 05/24/2024 we might not need this step of removing start
+            % and end points- i think the conv, valid does that. need to
+            % check
             ind = (fitwidth+1):(tracks(ii).len-fitwidth);
 
             extra_inputs = struct_parser(centroid_fields_extra, tracks(ii),ind);
