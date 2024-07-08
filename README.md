@@ -1,5 +1,5 @@
 # ParticleTracking
-Michelle's particle tracking code which is built around Nick Ouellette's code
+Michelle's 2D particle tracking code in MATLAB which is an updated version of Nick Ouellette's PTV code. Original [source code](https://web.stanford.edu/~nto/software.shtml) here.
 
 ## Particle Finding
 First use `Particle_Finder.m` to identify particles in your images. The output should be a structure with centroids of identified particles.
@@ -8,7 +8,7 @@ First use `Particle_Finder.m` to identify particles in your images. The output s
 Next use `Particle_Tracker.m` to link identified particles into individual trajectories.
 
 ## Example
-See `example_new.m` for updated example use case.
+See `example.m` for updated example use case.
 
 ## Future things to add:
 - More analysis, cleaning, and plotting codes
