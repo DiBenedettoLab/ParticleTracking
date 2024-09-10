@@ -28,7 +28,6 @@ function [vtracks,ntracks,meanlength,rmslength] = Predictive_Tracker(centroids,v
 % everything should be column vectors/matrices with the same column length.
 % the extra fields can have different row lengths
 
-yesvels = 1; %need to make this an option (to only get tracks no velocities)
 
 %% Parse options (can add more as needed)
 
@@ -36,6 +35,7 @@ yesvels = 1; %need to make this an option (to only get tracks no velocities)
 defaultFitwidth = 3;
 defaultFilterwidth = 1; % what is the difference between this and the other parameter?
 defaultMax_disp = inf;
+defaultOnly_linking = 0; % if true, then the code does not calculate velocities, only links tracks. this helps keep short tracks around
 
 if size(varargin) == 1
     
@@ -58,6 +58,7 @@ else
     addParameter(p,'fitwidth',defaultFitwidth,validScalarPosNum);
     addParameter(p,'filterwidth',defaultFilterwidth,validScalarPosNum);
     addParameter(p,'max_disp',defaultMax_disp,validScalarPosNum);
+    addParameter(p,'only_linking',defaultOnly_linking)
 
     parse(p,varargin{:});
     % Convert structure to variables
@@ -332,7 +333,7 @@ end
 
     end
 
-    if ~yesvels
+    if only_linking % only link tracks, do not calculate velocities
         vtracks = tracks([tracks.len] > 1); %remove unmatched
         ntracks=numel(vtracks);
         meanlength = mean([vtracks.len]);
