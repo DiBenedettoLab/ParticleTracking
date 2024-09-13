@@ -329,8 +329,6 @@ end
             num2str(sum(links==0),'%.0f')])
         disp(['    Total number of tracks: ' num2str(numel(tracks),'%.0f')])
 
-
-
     end
 
     if only_linking % only link tracks, do not calculate velocities
