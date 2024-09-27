@@ -165,7 +165,7 @@ end
 
     Nf=numel(tt);
     if Nf < (2*fitwidth+1)
-        error(['Sorry, found too few files named ' inputnames '.'])
+        error('Sorry, found too few files.')
     end
 
 
