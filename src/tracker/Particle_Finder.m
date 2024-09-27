@@ -96,9 +96,9 @@ end
 %else
 %    onebackground=0;
 % %end
-% if ~exist('correct','var') || isempty(correct)  %%MHD
-%     correct=[];
-% end
+if ~exist('correct','var') || isempty(correct)  %%MHD
+    correct=[];
+end
 
 
 % -=- Decide whether avi, stack, or images; set up -=---------------------
