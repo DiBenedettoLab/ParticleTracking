@@ -191,6 +191,20 @@ elseif strcmp(ext,'.seq')
     tmax=min([framerange(2) max(tt)]);
     
     fclose(fid);
+elseif strcmp(ext,'.mp4')
+    movtype='mp4';
+    v = VideoReader(fullfile(filepath,names.name));
+    color_depth=v.BitsPerPixel;
+    
+    if strcmp(class(read(v,1)),'uint8')
+        color_depth=2^8;
+    end
+    
+    ht=v.Height;
+    wd=v.Width;
+    tmin=max([framerange(1) 1]);
+    tmax=min([framerange(2) v.NumFrames]);
+
 else
     movtype='images';
     movinfo=imfinfo(fullfile(filepath,names(1).name));
@@ -283,6 +297,11 @@ for ii=1:Nf
     tt=tmin+ii-1; % current time
     switch movtype
         case('avi')
+            
+            im = double(read(v,tt));
+            
+            NAME = names.name;
+       case('mp4')
             
             im = double(read(v,tt));
             

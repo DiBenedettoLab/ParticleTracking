@@ -77,7 +77,7 @@ tr_big = mode(big_area_tracks);
 %% get cross_corr velocity and compare to particle tracker
 close all
 n = vtracks(tr_big).len;
-medfilt_win = 0;
+medfilt_win = [0 0];
 windowsize = 5;
 
 df = 1; %frames between cross-corr
@@ -115,6 +115,7 @@ plot(u_corr)
 hold all
 plot(u_tracker,'--')
 
+%%
 pause
 %% increase df to minimize peaklocking
 figure

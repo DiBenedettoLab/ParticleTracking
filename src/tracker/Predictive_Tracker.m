@@ -146,21 +146,27 @@ if ~issorted(t)
 end
 
     %% Sort out which particles were found in which frames
-
+    
     % Start frame counter at 1 (helps streamline code)
     start_time = min(t) -1;
     t = t - start_time;
 
+    % Create a time vector (min to max)
     tt2=1:max(t);
 
+    % Find the index start and end for each frame with particles
+    % So, endsind are the indices of the last time for each frame
+    % beginsind are the indices of the first time in each frame
     [~,endsind]=unique(t,'last');
     [tt,beginsind]=unique(t,'first');
 
+    % map the indices to total time (zeros mean no particles)
     ends=zeros(length(tt2),1);
     begins=ends;
-
     ends(tt)=endsind;
     begins(tt)=beginsind;
+
+    % time vector again, rename for some reason
     tt=tt2;
 
     Nf=numel(tt);
@@ -206,6 +212,9 @@ end
         if begins(t)==1 & t~=1
             nfr1=0;
             ind=[];
+        elseif ind==0
+            nfr1 = 0;
+            ind = [];
         else
             nfr1 = numel(ind);
         end
@@ -214,9 +223,12 @@ end
             warning('MATLAB:PredictiveTracker:noParticles', ...
                 ['Found no particles in frame ' num2str(t) '.']);
         end
-
+    
+        try
         fr1=[x(ind) y(ind)];
-
+        catch
+            keyboard
+        end
 
         centroid_extras = struct();
         for f = 1:N_extra
